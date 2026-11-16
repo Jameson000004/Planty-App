@@ -1,0 +1,1084 @@
+# PLANTLY
+## Master AI Coding-Agent Prompt
+**Project:** Plantly AI Plant Care Companion  
+**Tagline:** Your plants, understood.  
+**Document:** Master Implementation Specification  
+**Target platforms:** iOS and Android  
+**Product model:** Freemium subscription  
+**Launch strategy:** Global audience, balanced low-cost MVP
+
+---
+
+# 1. ROLE AND MISSION
+
+Act as a senior mobile application engineer, product architect, UI/UX designer, AI integration engineer, database engineer, security specialist, and QA engineer.
+
+Your task is to build **Plantly**, a polished, production-minded, cross-platform mobile application that helps people identify plants, understand possible plant-health problems, establish personalized care routines, and keep their plants healthy.
+
+Plantly must not be a static prototype or a collection of attractive screens. Build a functioning application with real navigation, persistent data, authentication, image handling, backend integration, AI-assisted plant analysis, care scheduling, task completion, and a clear foundation for subscriptions.
+
+The application must balance four priorities:
+
+1. Premium design and a coherent brand identity.
+2. Reliable plant-care functionality.
+3. Affordable implementation and operating costs.
+4. An architecture that can evolve beyond the MVP.
+
+Work incrementally. Inspect the existing repository before making changes, establish a plan, implement one coherent feature at a time, and verify each stage before continuing.
+
+Do not stop after generating a plan or presenting sample code. Continue through the implementation stages that the available environment supports. Never claim that a feature is operational unless it has been implemented and verified.
+
+Do not deploy publicly, purchase services, or create paid subscriptions without explicit authorization.
+
+# 2. PRODUCT VISION
+
+Plantly is an AI-powered plant-care companion for beginners, hobbyists, and experienced plant owners.
+
+The central experience is simple:
+
+1. A user photographs a plant.
+2. Plantly attempts to identify it.
+3. The user saves the plant to their personal collection.
+4. Plantly helps assess visible symptoms when requested.
+5. The application creates an editable care plan.
+6. The user receives reminders, completes care tasks, and records observations.
+7. The AI assistant explains care recommendations in accessible language.
+
+The product should make plant care less intimidating. Users should understand not only what action to take, but why it may help.
+
+**Brand promise:** Your plants, understood.
+
+**Core principles:**
+- Helpful rather than overwhelming.
+- Evidence-aware rather than falsely certain.
+- Personal rather than generic.
+- Calm rather than gamified.
+- Affordable to build and operate.
+- Respectful of user privacy and plant-care uncertainty.
+
+# 3. REQUIRED TECHNOLOGY STACK
+
+Use the following default stack unless repository constraints or a documented technical blocker justify a change.
+
+## Mobile application
+
+- React Native.
+- Expo with TypeScript.
+- Expo Router for file-based navigation.
+- React Native StyleSheet and a centralized design-token system.
+- TanStack Query for server-state fetching, caching, and mutations where appropriate.
+- React Hook Form and Zod for forms and validation when useful.
+- Expo Image Picker or Expo Camera for image acquisition.
+- Expo Notifications for local notifications and the foundation for push notifications.
+- Expo SecureStore for small sensitive client-side values when needed.
+- Expo Application Services (EAS) for managed builds and release preparation.
+
+Prefer established Expo-compatible libraries. Do not introduce dependencies merely because they are fashionable.
+
+## Backend and database
+
+Use Supabase for:
+
+- PostgreSQL database.
+- Authentication.
+- Private image storage.
+- Row Level Security (RLS).
+- Database migrations.
+- Server-side functions for privileged operations.
+
+Use Supabase Edge Functions or another appropriately secured server-side runtime for AI orchestration, external provider requests, subscription validation, and privileged business logic.
+
+Do not expose service-role credentials or provider secrets in the mobile application.
+
+## AI and plant identification
+
+Implement provider-independent service interfaces for:
+
+1. Plant identification.
+2. Visual symptom analysis.
+3. Personalized care recommendations.
+4. Conversational plant-care assistance.
+
+Select a suitable plant-identification provider only after confirming its current API, pricing, image requirements, licensing, and production terms.
+
+Use a vision-capable AI model for symptom interpretation when suitable. Do not assume that a general vision model alone can reliably identify every plant or diagnose every disease.
+
+Keep provider integrations behind server-side adapters so that services can be changed without rewriting the entire application.
+
+If no provider credentials are available, implement the interface, validation, loading states, error handling, and clearly labeled development fixtures. Never represent fixture data as a real AI result.
+
+## Subscription infrastructure
+
+Prepare a subscription architecture compatible with Apple App Store and Google Play in-app purchases.
+
+RevenueCat may be used to simplify cross-platform subscription management, subject to account setup, current SDK compatibility, and pricing review.
+
+Subscription entitlements must be validated through a trusted integration. Do not grant premium access based solely on a client-side flag.
+
+The app must remain testable without paid subscription infrastructure through a clearly identified development entitlement mode.
+
+## Development environment
+
+Preferred environment: Cursor with a local Git repository.
+
+Alternative environments: Claude Code, Replit, or Google Antigravity.
+
+The project must remain a conventional, portable codebase rather than depending on proprietary editor-only functionality.
+
+# 4. OPERATING RULES FOR THE CODING AGENT
+
+Before implementation:
+
+1. Inspect the existing repository, package configuration, assets, environment templates, and existing code.
+2. Identify whether the repository is empty, partially implemented, or already functional.
+3. Preserve useful existing work.
+4. Write a concise implementation plan with dependencies and milestones.
+5. Identify missing external credentials and services.
+6. Create or update project documentation.
+7. Start implementation only after establishing the project structure.
+
+During implementation:
+
+- Work in small, coherent, verifiable increments.
+- Run available type checks, linting, tests, and builds regularly.
+- Fix failures introduced by your changes.
+- Explain environmental blockers precisely.
+- Never invent command results, API responses, test outcomes, or deployment status.
+- Never silently discard existing functionality.
+- Do not place the entire application in one component or one oversized file.
+- Avoid unnecessary abstractions, microservices, and infrastructure.
+- Use strict TypeScript settings where practical.
+- Handle loading, empty, error, success, and permission-denied states.
+- Keep business logic separate from UI components.
+- Keep secrets out of source control.
+- Clearly label simulated features and unfinished integrations.
+- Record important technical decisions in documentation.
+
+If a necessary external service is unavailable, continue with a clean adapter and a documented development mode. Do not block unrelated functionality.
+
+# 5. BRAND AND VISUAL DESIGN
+
+The primary design reference is the supplied **Tend-Workflow.pdf**. Follow its botanical editorial direction while maintaining Plantly's own identity.
+
+Do not copy another product's branding or present reference screenshots as the completed Plantly interface.
+
+## Brand identity
+
+Brand name: Plantly.
+
+Tagline: Your plants, understood.
+
+Logo direction: Elegant Plantly wordmark with refined typography. A subtle botanical detail may be incorporated into the lettering, but avoid a generic leaf icon as the entire identity.
+
+Use the approved logo asset if one is available in the repository. Otherwise, create a clean, replaceable wordmark implementation and document where final logo assets should be placed. Do not redraw a supplied logo unnecessarily.
+
+## Typography
+
+Display typeface: Fraunces Soft, or the closest available and properly licensed Fraunces family variant.
+
+Interface typeface: Geist.
+
+Use expressive serif typography for onboarding, editorial headlines, and selected plant names. Use the interface typeface for navigation, forms, controls, care instructions, and body text.
+
+Include font files in the application only when their licenses permit redistribution. Provide reliable fallbacks.
+
+## Color tokens
+
+Create centralized, semantic design tokens for both themes.
+
+| Token | Light theme | Intended use |
+|---|---|---|
+| Paper | `#FBFBF7` | Main background |
+| Sage ground | `#EEF0E4` | Home and collection surfaces |
+| Forest ink | `#0F2A1D` | Primary text and emphasis |
+| Chartreuse | `#D9F36A` | Primary actions and progress |
+| Coral signal | `#FF7A59` | Findings and selected alerts |
+| Mist green | `#E6EADA` | Scan and secondary surfaces |
+| Muted green | `#5D6E61` | Secondary text |
+
+Proposed dark-theme tokens:
+
+| Token | Dark theme | Intended use |
+|---|---|---|
+| Forest background | `#10231A` | Main background |
+| Elevated forest | `#1C3226` | Cards and elevated surfaces |
+| Soft ivory | `#F5F2E9` | Primary text |
+| Muted sage | `#C1CEBE` | Secondary text |
+| Chartreuse | `#D9F36A` | Primary actions |
+| Coral signal | `#FF7A59` | Findings and alerts |
+| Dark divider | `#34483B` | Borders and separators |
+
+These are initial design tokens. Validate contrast and readability in implementation. Do not use color alone to communicate status.
+
+## Layout rules
+
+- Design around a reference width of approximately 393 points.
+- Use a consistent 8-point spacing rhythm.
+- Start with approximately 20-point horizontal screen margins.
+- Plant cards: approximately 28-point corner radius.
+- Bottom sheets: approximately 34-point top corner radius.
+- Primary buttons: approximately 56-point height with pill-shaped corners.
+- Interactive targets: at least 44 points where platform conventions permit.
+- Use approximately 1.5-point outline icons for the intended visual style.
+- Respect device safe areas, keyboard insets, and system navigation.
+- Use generous whitespace and realistic plant photography.
+- Apply glass effects selectively to floating navigation or camera controls, not every card.
+- Avoid excessive gradients, neon effects, decorative dots, generic dashboards, and AI-generated visual clutter.
+
+Support system appearance, a manual light/dark preference, and persistent theme selection.
+
+# 6. APPLICATION NAVIGATION
+
+Implement the following primary destinations:
+
+1. Home.
+2. My Plants.
+3. Scan.
+4. Ask Plantly.
+5. Profile.
+
+The Scan action should be visually prominent, using a central or floating camera control if it fits the approved design.
+
+Use Expo Router with a consistent navigation structure. Authentication screens must be accessible before the authenticated application shell. Deep links and navigation state must be handled safely.
+
+Recommended routes:
+
+- `/welcome`
+- `/auth/sign-in`
+- `/auth/sign-up`
+- `/onboarding`
+- `/(tabs)/home`
+- `/(tabs)/plants`
+- `/(tabs)/scan`
+- `/(tabs)/assistant`
+- `/(tabs)/profile`
+- `/plants/[plantId]`
+- `/scan/results/[analysisId]`
+- `/care-plan/[plantId]`
+- `/settings`
+- `/settings/notifications`
+- `/settings/privacy`
+- `/settings/subscription`
+
+Adjust route naming to the actual repository structure while preserving the required flows.
+
+# 7. REQUIRED SCREENS AND FUNCTIONALITY
+
+## A. Welcome and onboarding
+
+Build an editorial welcome screen featuring:
+
+- Plantly wordmark.
+- Hero plant imagery.
+- Headline: “Plant care, finally clear.”
+- Supporting text explaining identification and personalized care.
+- Continue with Apple.
+- Continue with Google.
+- Email sign-in or sign-up.
+- Terms and privacy links.
+
+Authentication must be functional when configured.
+
+Request permissions only when necessary and explain their purpose first.
+
+Onboarding should collect only useful initial information, such as the user's preferred units, timezone, reminder preference, and experience level where relevant.
+
+Do not force users to complete a long questionnaire before reaching the app.
+
+## B. Home dashboard
+
+Display:
+
+- A personalized greeting.
+- A concise care overview.
+- Care tasks due today and soon.
+- A preview of the user's plants.
+- A prominent scan action.
+- A short contextual care tip when useful.
+
+Do not fabricate weather conditions or claim to have retrieved live data when no weather integration exists.
+
+If there are no saved plants, display a welcoming empty state and an obvious action to add the first plant.
+
+If the user has no tasks due, communicate that clearly rather than rendering empty cards.
+
+## C. My Plants
+
+Implement:
+
+- A plant collection.
+- Plant cards with image, common name, scientific name when available, and care status.
+- Search and basic filtering.
+- Add plant action.
+- Empty, loading, and error states.
+- A plant detail entry point.
+- Edit and delete operations with appropriate confirmation.
+
+Users must be able to add a plant manually when identification is unavailable or unwanted.
+
+## D. Scan and plant identification
+
+The scan flow must support:
+
+- Camera capture.
+- Photo-library selection.
+- Permission handling.
+- Image preview and retake.
+- Image size and file-type validation.
+- Upload progress.
+- Identification request.
+- Results with confidence or uncertainty where supported.
+- Save-to-collection action.
+- Retry and manual identification fallback.
+
+Compress images appropriately before upload while retaining enough detail for plant recognition.
+
+Use private storage for user plant images by default.
+
+Never claim that identification is certain unless the provider's capabilities and returned data justify that representation.
+
+If the image is blurry, poorly lit, or not plant-related, explain the problem and suggest a retake.
+
+Do not show hardcoded identification results as if they were produced from the user's photo.
+
+## E. Plant detail
+
+Show:
+
+- Main plant image.
+- Common and scientific names when known.
+- Identification confidence or source where available.
+- Health and care overview.
+- Care schedule.
+- Latest care logs.
+- Notes and observations.
+- Edit plant information.
+- Replace image.
+- Delete plant.
+
+Provide separate sections or tabs for Care, Details, and History where useful.
+
+Do not invent a plant's acquisition date, previous watering history, health history, or environment.
+
+## F. Diagnosis results
+
+Provide a structured analysis screen containing:
+
+- Observed visible symptoms.
+- Possible explanations.
+- Confidence or uncertainty.
+- Relevant questions or missing information.
+- Recommended next steps.
+- A save or review action.
+- A way to retry with a better image.
+
+Clearly distinguish visible observations from possible causes.
+
+For example, yellow leaf edges may be consistent with several causes. Do not present one symptom as proof of a specific disease.
+
+Do not recommend pesticides or other potentially harmful interventions casually. Encourage appropriate expert assistance when a severe or ambiguous issue warrants it.
+
+## G. Care planner
+
+Implement personalized, editable schedules for relevant tasks such as:
+
+- Watering.
+- Light checks.
+- Soil moisture checks.
+- Fertilizing.
+- Cleaning leaves.
+- Repotting.
+- General plant inspection.
+
+Care recommendations should consider available plant identity, plant type, user-provided environment, season where reliable, pot and soil details when supplied, and the user's recorded care history.
+
+Avoid pretending that every plant needs a fixed universal watering interval.
+
+Use intervals as starting suggestions, not guarantees. Encourage soil and plant-condition checks when appropriate.
+
+Support:
+
+- Upcoming tasks.
+- Daily and weekly views.
+- Mark complete.
+- Skip or snooze.
+- Reschedule.
+- Add a care log.
+- Edit a task.
+- Pause reminders.
+- Rebuild a plan after a relevant change.
+
+Explain important schedule changes and obtain confirmation before applying material changes.
+
+## H. Ask Plantly AI assistant
+
+Create a conversational interface that can answer plant-care questions and use authorized information about the user's saved plants.
+
+When relevant, context may include:
+
+- Plant identification.
+- User-supplied location or growing conditions.
+- Care plan.
+- Care logs.
+- Recent observations.
+- Previous conversation messages.
+
+Only send information necessary for the request.
+
+Support:
+
+- Text input.
+- Loading and retry states.
+- Conversation history.
+- Suggested questions.
+- Plant-specific context selection.
+- Clear AI uncertainty.
+- Helpful follow-up actions where appropriate.
+
+Do not claim access to live weather, environmental sensors, external accounts, or previous history unless those integrations and data actually exist.
+
+Implement server-side AI orchestration with validated inputs and structured outputs. Handle provider failures, rate limits, malformed responses, and usage limits.
+
+## I. Profile and settings
+
+Include:
+
+- User profile.
+- Theme selection: system, light, dark.
+- Timezone and unit preferences.
+- Notification preferences.
+- Subscription and usage information.
+- Privacy controls.
+- Data export or deletion request flow where supported.
+- Sign out.
+- Account deletion workflow.
+
+Account deletion must handle associated personal data, plant images, logs, and relevant backend records in accordance with the documented retention policy.
+
+# 8. DATABASE AND DATA MODEL
+
+Create version-controlled SQL migrations. Use UUID primary keys, timestamps, appropriate indexes, foreign keys, constraints, and RLS policies.
+
+Use the authenticated user's ID as the owner of personal records.
+
+Recommended entities follow.
+
+## `profiles`
+
+- `id`: UUID referencing the authenticated user.
+- `display_name`: nullable text.
+- `timezone`: text.
+- `preferred_units`: text.
+- `theme_preference`: system, light, or dark.
+- `created_at`.
+- `updated_at`.
+
+## `plants`
+
+- `id`: UUID.
+- `user_id`: owner UUID.
+- `common_name`: nullable text.
+- `scientific_name`: nullable text.
+- `identification_status`: unverified, identified, or needs_review.
+- `identification_confidence`: nullable numeric.
+- `identification_provider`: nullable text.
+- `primary_image_path`: nullable text.
+- `acquired_at`: nullable timestamp.
+- `environment_notes`: nullable text.
+- `pot_type`: nullable text.
+- `soil_type`: nullable text.
+- `light_conditions`: nullable text.
+- `status`: active or archived.
+- `created_at`.
+- `updated_at`.
+
+## `plant_images`
+
+- `id`: UUID.
+- `plant_id`: UUID.
+- `user_id`: UUID.
+- `storage_path`: text.
+- `image_type`: plant, leaf, symptom, or other.
+- `created_at`.
+
+## `care_plans`
+
+- `id`: UUID.
+- `plant_id`: UUID.
+- `user_id`: UUID.
+- `status`: active, paused, or archived.
+- `plan_version`: integer.
+- `created_at`.
+- `updated_at`.
+
+## `care_tasks`
+
+- `id`: UUID.
+- `plant_id`: UUID.
+- `care_plan_id`: nullable UUID.
+- `user_id`: UUID.
+- `task_type`: controlled category.
+- `title`: text.
+- `instructions`: text.
+- `due_at`: nullable timestamp.
+- `recurrence_interval_days`: nullable integer.
+- `status`: scheduled, completed, skipped, or cancelled.
+- `reminder_enabled`: boolean.
+- `created_at`.
+- `updated_at`.
+
+## `care_logs`
+
+- `id`: UUID.
+- `plant_id`: UUID.
+- `task_id`: nullable UUID.
+- `user_id`: UUID.
+- `action_type`: text.
+- `notes`: nullable text.
+- `observed_at`: timestamp.
+- `created_at`.
+
+## `plant_analyses`
+
+- `id`: UUID.
+- `plant_id`: nullable UUID.
+- `user_id`: UUID.
+- `image_path`: nullable text.
+- `analysis_type`: identification or symptom_analysis.
+- `provider`: text.
+- `result_json`: validated structured result.
+- `confidence`: nullable numeric.
+- `status`: pending, completed, or failed.
+- `created_at`.
+
+## `conversations`
+
+- `id`: UUID.
+- `user_id`: UUID.
+- `plant_id`: nullable UUID.
+- `title`: nullable text.
+- `created_at`.
+- `updated_at`.
+
+## `conversation_messages`
+
+- `id`: UUID.
+- `conversation_id`: UUID.
+- `user_id`: UUID.
+- `role`: user or assistant.
+- `content`: text.
+- `metadata`: validated JSON.
+- `created_at`.
+
+## `notification_preferences`
+
+- `user_id`: UUID.
+- `care_reminders_enabled`: boolean.
+- `push_enabled`: boolean.
+- `quiet_hours_start`: nullable time.
+- `quiet_hours_end`: nullable time.
+- `updated_at`.
+
+## `subscriptions` or `entitlements`
+
+Store only the information necessary to determine access, such as provider customer identifier, entitlement state, product identifier, and relevant expiry information.
+
+Treat the subscription provider or trusted server-side validation as the source of truth. Do not let clients directly grant themselves entitlements.
+
+## `ai_usage_events`
+
+- `id`: UUID.
+- `user_id`: UUID.
+- `feature`: identification, symptom_analysis, or assistant.
+- `provider`: text.
+- `status`: text.
+- `created_at`.
+
+Store only the minimum information necessary for usage enforcement, troubleshooting, and cost monitoring. Avoid logging sensitive prompts or full images unnecessarily.
+
+Use database constraints and indexes to support ownership checks and common queries. Keep the data model as small as practical for the MVP.
+
+# 9. SECURITY AND ROW LEVEL SECURITY
+
+Enable RLS on every table containing user-specific data.
+
+For user-owned records, enforce policies so users can read or modify only records they own.
+
+For child records, verify ownership through the associated parent or explicit owner field. Do not rely on client-side filtering as an access-control mechanism.
+
+Storage policies must restrict private plant images to authorized users.
+
+Server-side functions must:
+
+- Authenticate requests.
+- Validate input schemas.
+- Enforce request-size limits.
+- Apply usage limits.
+- Protect provider credentials.
+- Return safe, structured errors.
+- Avoid leaking secrets or internal stack traces.
+- Verify ownership before accessing user data.
+
+Use secure HTTPS communication and current supported dependencies.
+
+Never include Supabase service-role keys, AI provider keys, or privileged subscription credentials in client bundles.
+
+Use environment variables and provide a `.env.example` containing placeholder values only.
+
+Implement account deletion and document how personal data and backups are handled.
+
+# 10. AI SERVICE CONTRACTS
+
+Create provider-independent service interfaces with validated request and response types.
+
+## Plant identification
+
+Input:
+
+- Image or secure image reference.
+- Optional user-provided context.
+- Optional candidate species if the user is narrowing an identification.
+
+Output:
+
+- Candidate common names.
+- Scientific names where supported.
+- Confidence or confidence category.
+- Distinguishing observations.
+- Whether another image is recommended.
+- Provider and processing status.
+
+## Symptom analysis
+
+Input:
+
+- Plant image.
+- Known plant identity when available.
+- User-reported symptoms.
+- Relevant care history and environment when available.
+
+Output:
+
+- Observed visual features.
+- Possible explanations.
+- Confidence or uncertainty.
+- Additional information needed.
+- Low-risk recommended checks.
+- Escalation guidance when warranted.
+
+Do not let the model produce unrestricted database commands or directly mutate a care plan.
+
+## Care planning
+
+Generate structured recommendations, not arbitrary application instructions.
+
+Each recommendation should include:
+
+- Task type.
+- Reason.
+- Suggested timing or interval.
+- Relevant conditions.
+- Confidence or evidence level.
+- Whether user confirmation is required.
+
+Validate model outputs before storing or applying them. Reject malformed dates, unsupported task types, unreasonable intervals, and missing required fields.
+
+## Assistant
+
+Use a server-side orchestration layer with constrained tool access.
+
+Allow only explicit, validated operations such as reading a user's authorized plant details, retrieving care logs, or proposing a schedule change.
+
+Require user confirmation before applying significant changes.
+
+Do not execute arbitrary model-generated SQL, code, shell commands, or external requests.
+
+# 11. FREEMIUM MODEL AND USAGE CONTROL
+
+Implement an entitlement abstraction independent of UI presentation.
+
+The free tier should support the essential plant-care journey, subject to configurable and transparent limits.
+
+Premium features may include higher AI usage, additional advanced analysis, expanded history, or enhanced care planning. Treat these as proposed monetization options rather than final pricing decisions.
+
+Do not hardcode prices, currency, or entitlement names throughout the application.
+
+Implement:
+
+- Feature entitlement checks.
+- Usage counters or server-side usage events.
+- Clear upgrade messaging.
+- Subscription status display.
+- Restore-purchases entry point.
+- Graceful handling of expired or unavailable subscriptions.
+- Development-only subscription fixtures.
+
+Store purchase validation and entitlement updates must use a trusted subscription integration.
+
+Do not build a custom payment system for Apple or Google digital subscriptions unless the applicable platform rules and product requirements explicitly support the intended alternative.
+
+# 12. NOTIFICATIONS AND SCHEDULING
+
+Care reminders must respect the user's timezone and notification preferences.
+
+Begin with local scheduled notifications where they adequately meet the MVP requirements.
+
+Provide a documented path to server-triggered push notifications if cross-device synchronization or server-driven reminders become necessary.
+
+Handle:
+
+- Permission denied.
+- Notifications disabled.
+- Rescheduled tasks.
+- Completed or cancelled tasks.
+- Timezone changes.
+- Duplicate scheduling prevention.
+- Expired or outdated reminders.
+
+Never rely on a notification being delivered as proof that a care task was completed.
+
+The database remains the source of truth for care tasks and logs.
+
+# 13. IMAGE AND STORAGE MANAGEMENT
+
+Use private image storage by default.
+
+Implement:
+
+- File-type validation.
+- Maximum upload size.
+- Image compression.
+- Secure upload paths.
+- Ownership checks.
+- Temporary access URLs when needed.
+- Deletion of unused images.
+- Safe error handling.
+- Clear user consent for image processing.
+
+Document whether images are sent to third-party AI providers, how they are processed, and what the applicable provider retention terms are.
+
+Do not promise that images are never retained by third parties unless the provider contract actually guarantees it.
+
+Avoid storing duplicate images and unnecessarily large originals. Preserve sufficient detail for plant identification and symptom analysis.
+
+# 14. API AND BACKEND BOUNDARIES
+
+Define typed client-facing operations for:
+
+- Profile retrieval and updates.
+- Plant creation, reading, updating, and deletion.
+- Plant image upload and removal.
+- Plant identification.
+- Symptom analysis.
+- Care plan retrieval and updates.
+- Care task completion and rescheduling.
+- Care log creation.
+- Assistant conversations.
+- Usage and entitlement retrieval.
+- Notification preferences.
+- Account deletion requests.
+
+Use a consistent response format and centralized error handling.
+
+For privileged operations, use authenticated server-side functions rather than embedding provider calls in mobile components.
+
+Prefer idempotent operations where duplicate requests could create multiple tasks, logs, or usage charges.
+
+Document request and response schemas for the AI functions and any custom endpoints.
+
+# 15. PERFORMANCE AND COST CONTROL
+
+Keep the MVP affordable.
+
+- Avoid unnecessary always-on infrastructure.
+- Prefer managed services with transparent free tiers or low entry costs.
+- Verify current service limits and pricing before selecting production providers.
+- Use pagination for growing collections and histories.
+- Cache appropriate read-only results.
+- Avoid repeatedly analyzing the same unchanged image without a good reason.
+- Resize images before expensive AI calls.
+- Apply per-user rate limits and usage budgets.
+- Provide user-friendly quota messages.
+- Add basic error monitoring and privacy-conscious analytics.
+- Avoid unnecessary third-party SDKs.
+- Keep development fixtures free of paid provider calls.
+- Do not promise unlimited AI usage in a free plan without an operating-cost model.
+
+Create a configuration layer for AI limits and feature entitlements so that usage can be adjusted without rewriting the UI.
+
+# 16. ACCESSIBILITY AND INTERNATIONALIZATION
+
+The initial audience is global.
+
+Implement:
+
+- Readable text sizes.
+- Adequate light and dark theme contrast.
+- Screen-reader labels.
+- Logical focus and reading order.
+- Accessible touch targets.
+- Dynamic text sizing where supported.
+- Clear error messages.
+- Reduced reliance on color alone.
+- Locale-aware dates and times.
+- Timezone-aware reminders.
+- A unit-preference abstraction for metric and imperial measurements.
+- A translation-ready string structure.
+
+Use English initially unless further localization is explicitly approved.
+
+Do not hardcode country-specific plant-care assumptions into the core recommendation engine.
+
+# 17. ANALYTICS AND OBSERVABILITY
+
+Instrument a small set of meaningful product events, such as:
+
+- Onboarding completed.
+- Plant added.
+- Identification requested.
+- Identification completed or failed.
+- Analysis completed or failed.
+- Care task completed.
+- Reminder permission granted or denied.
+- Assistant conversation started.
+- Upgrade screen viewed.
+- Subscription entitlement changed.
+
+Use pseudonymous identifiers where possible. Do not send plant photos, full conversations, authentication secrets, or unnecessary personal details to analytics.
+
+Add crash and error reporting if suitable for the budget and development stage. Document how to disable analytics and how retention is configured.
+
+# 18. TESTING REQUIREMENTS
+
+Implement tests appropriate to the architecture.
+
+## Unit tests
+
+Test:
+
+- Care scheduling and recurrence calculations.
+- Timezone-sensitive task dates.
+- Input validation.
+- AI response validation.
+- Entitlement checks.
+- Usage limits.
+- Theme token selection.
+- Error normalization.
+
+## Integration tests
+
+Test:
+
+- Authentication flow.
+- RLS ownership boundaries.
+- Plant CRUD operations.
+- Image upload authorization.
+- Care task completion and logging.
+- AI endpoint validation.
+- Failure and retry handling.
+- Subscription entitlement processing.
+
+## UI and end-to-end tests
+
+Verify the primary journeys:
+
+1. Sign up or sign in.
+2. Complete onboarding.
+3. Add a plant manually.
+4. Scan and identify a plant using a configured provider.
+5. Save the identification.
+6. Review plant details.
+7. Create or edit a care plan.
+8. Complete a care task.
+9. Ask a plant-care question.
+10. Change the theme.
+11. Sign out and return.
+12. Delete the account through the supported flow.
+
+Use mocks only when explicitly testing mocked behavior. Clearly distinguish tests against fixtures from tests against real providers.
+
+Verify at least one representative iOS and Android development/build path when the required tooling is available.
+
+# 19. PROJECT STRUCTURE
+
+Use a modular structure similar to the following, adapted to the repository:
+
+- `app/` for Expo Router screens and layouts.
+- `src/components/` for reusable UI components.
+- `src/features/auth/` for authentication.
+- `src/features/plants/` for plant collection and details.
+- `src/features/scan/` for image acquisition and identification.
+- `src/features/diagnosis/` for symptom analysis.
+- `src/features/care/` for schedules, tasks, and logs.
+- `src/features/assistant/` for AI chat.
+- `src/features/subscriptions/` for entitlements and upgrade UI.
+- `src/features/settings/` for profile and preferences.
+- `src/services/` for API and provider adapters.
+- `src/lib/` for Supabase and shared infrastructure.
+- `src/theme/` for tokens and theme definitions.
+- `src/types/` for shared domain types.
+- `src/utils/` for focused utilities.
+- `supabase/migrations/` for database migrations.
+- `supabase/functions/` for server-side operations.
+- `assets/` for fonts, icons, and approved imagery.
+- `docs/` for technical and product documentation.
+- `tests/` for automated tests.
+
+Avoid forcing this exact structure if the existing repository has a sound convention.
+
+# 20. DOCUMENTATION DELIVERABLES
+
+Create or update the following documents:
+
+1. `README.md`: project overview, setup, scripts, and troubleshooting.
+2. `PRD.md`: MVP scope and acceptance criteria.
+3. `DESIGN.md`: brand identity, design tokens, components, themes, and accessibility.
+4. `ARCHITECTURE.md`: system design, data flow, boundaries, and technical decisions.
+5. `DATABASE.md`: entities, relationships, indexes, RLS, and migrations.
+6. `API.md`: server functions, schemas, authentication, and error formats.
+7. `AI_SAFETY.md`: uncertainty, provider boundaries, image handling, and recommendation safeguards.
+8. `SECURITY.md`: secrets, RLS, storage policies, privacy, and account deletion.
+9. `IMPLEMENTATION_PLAN.md`: milestones, dependencies, and completion status.
+10. `.env.example`: required configuration names with placeholder values only.
+
+Keep documentation aligned with actual code. Do not document an integration as complete when it remains a placeholder.
+
+# 21. IMPLEMENTATION MILESTONES
+
+Build in this order.
+
+## Milestone 1: Foundation
+
+- Inspect the repository.
+- Set up or repair the Expo TypeScript project.
+- Configure routing.
+- Implement design tokens and light/dark themes.
+- Add typography and base components.
+- Create the main navigation shell.
+- Build the initial welcome screen.
+- Add linting, type checking, and baseline tests.
+
+**Exit criteria:** The app starts, navigation works, and the theme system functions.
+
+## Milestone 2: Backend and authentication
+
+- Configure Supabase.
+- Add migrations.
+- Implement RLS and storage policies.
+- Implement authentication.
+- Add profile preferences.
+- Connect the application to the backend.
+- Document environment setup.
+
+**Exit criteria:** Authenticated users can access only their own records.
+
+## Milestone 3: Plant collection
+
+- Build My Plants.
+- Build manual plant creation.
+- Implement plant detail screens.
+- Implement image upload and management.
+- Add edit, archive, and delete actions.
+- Add empty and failure states.
+
+**Exit criteria:** Plant records persist across sessions and respect ownership boundaries.
+
+## Milestone 4: AI scanning
+
+- Select and configure a plant-identification provider.
+- Implement secure image upload and server-side requests.
+- Add typed provider adapters.
+- Build scan and results screens.
+- Validate response schemas.
+- Implement uncertainty and retry handling.
+- Add a documented development fixture mode.
+
+**Exit criteria:** A configured provider can process an actual image, and errors or uncertain results are handled honestly.
+
+## Milestone 5: Care planner
+
+- Implement care plans and tasks.
+- Add care logs.
+- Implement schedule editing and completion.
+- Add local reminders.
+- Connect care data to the Home dashboard.
+- Test recurrence and timezone behavior.
+
+**Exit criteria:** Users can manage care tasks and review their history.
+
+## Milestone 6: AI assistant and symptom analysis
+
+- Implement structured symptom-analysis requests.
+- Implement the conversational assistant.
+- Add authorized plant context.
+- Apply usage limits.
+- Add safeguards for uncertain recommendations.
+- Add retry, error, and confirmation flows.
+
+**Exit criteria:** AI features use real configured services or clearly labeled development fixtures, with validated outputs.
+
+## Milestone 7: Freemium and launch readiness
+
+- Implement entitlement abstraction.
+- Add subscription UI and provider integration when configured.
+- Add restore-purchase handling.
+- Add usage reporting.
+- Complete privacy and deletion flows.
+- Finalize accessibility and performance checks.
+- Run test suites and build validation.
+- Complete release documentation.
+
+**Exit criteria:** The app is ready for a controlled test release, with remaining external setup and known limitations documented.
+
+# 22. ACCEPTANCE CRITERIA
+
+The MVP is not complete until:
+
+- The app launches successfully in its supported development environment.
+- iOS and Android share the intended product experience.
+- Light and dark themes work across all core screens.
+- Navigation and core interactions are functional.
+- Authentication works when configured.
+- Plant data persists in the backend.
+- RLS prevents unauthorized access to user data.
+- Image uploads respect ownership and validation rules.
+- Identification uses a real configured provider in production mode.
+- AI analysis communicates uncertainty appropriately.
+- Users can create, edit, complete, and review care tasks.
+- Care history is not fabricated.
+- Reminders respect user preferences and timezone.
+- AI usage and failures are controlled.
+- Subscription entitlements cannot be self-granted by the client.
+- Loading, empty, permission-denied, and error states are implemented.
+- Automated tests cover critical business logic and access boundaries.
+- Required documentation and environment templates are present.
+- No secrets are committed.
+- Known limitations and external dependencies are documented.
+- No test, build, or deployment is claimed successful without verification.
+
+# 23. FINAL EXECUTION INSTRUCTIONS
+
+Begin by inspecting the repository.
+
+Then:
+
+1. Summarize the existing project state.
+2. Present the proposed implementation sequence and identify blockers.
+3. Create or update the documentation and baseline project structure.
+4. Implement the first milestone.
+5. Run the relevant checks.
+6. Fix errors introduced by the implementation.
+7. Report what is genuinely complete, what has been tested, and what still needs configuration.
+8. Continue milestone by milestone without silently substituting mock functionality for real functionality.
+
+Prioritize working vertical slices over large amounts of disconnected code.
+
+If a choice must be made between visual polish and essential reliability, maintain the approved visual identity while ensuring authentication, data ownership, core care flows, and AI error handling are sound.
+
+Do not overbuild the MVP. Defer social networking, plant marketplaces, smart-home integrations, complex gamification, and unrelated features unless explicitly requested.
+
+Do not make live external service calls, purchase plans, publish the application, or deploy production infrastructure without the required credentials and authorization.
+
+**Final objective:** Deliver a polished, accessible, maintainable, cross-platform Plantly MVP that helps users understand their plants and take sensible care actions, with a clear path to sustainable AI usage and future growth.
+
+**Plantly. Your plants, understood.**

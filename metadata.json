@@ -1,0 +1,6 @@
+{
+  "name": "Plantly - AI Plant Care Companion",
+  "description": "Your plants, understood. Identify plants, analyze symptoms, schedule personalized care, and keep your plants thriving with calm botanical guidance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
